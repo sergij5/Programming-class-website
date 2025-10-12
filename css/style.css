@@ -1,0 +1,469 @@
+/* ===== GLOBAL RESET ===== */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Freckle Face', 'Luckiest Guy', cursive, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-color: #000;
+  background-image: url('../assets/bg.gif');
+  background-attachment: fixed;
+  background-position: center;
+}
+/* ===== HEADER SECTION ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.title {
+  font-size: 5.5rem;
+  color: #b97aff;
+  text-shadow:
+    0 0 12px #fff,
+    0 0 32px #b97aff,
+    0 0 48px #fff,
+    0 0 2px #000,
+    0 0 24px #fff,
+    0 0 2px #fff;
+  letter-spacing: 2px;
+  font-family: 'UnifrakturCook', cursive;
+  padding: 0 60px;
+  background: #000;
+  border-radius: 60px;
+  border: none;
+  box-shadow: 0 0 48px #000a;
+  position: relative;
+  z-index: 1;
+  min-width: 700px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 2.7rem;
+  margin: 32px 0 32px 0;
+  letter-spacing: 10px;
+  color: #e6baff;
+  text-shadow: 0 0 12px #fff8;
+  border: 4px dashed #b97aff;
+  padding: 10px 60px;
+  display: inline-block;
+  background: rgba(0,0,0,0.7);
+  font-family: 'VT323', monospace;
+  font-weight: bold;
+}
+
+/* ===== IMAGE STYLES ===== */
+.ttt-gif { height: 130px; width: auto; position: relative; top: 50px; filter: brightness(70%);}
+
+.title-gif {
+  height: 120px;
+  width: auto;
+  display: block;
+}
+#wil { height: 170px; width: auto; }
+.xtra-gif { height: 50px; width: auto; margin-top: 30px; display: block; }
+
+/* ===== CARD SECTION (HOME PAGE) ===== */
+.cards {
+  display: flex;
+  gap: 100px;
+  margin-top: 100px; /* lowered cards */
+  align-items: flex-start;
+  overflow: visible;
+  border-radius: 20px;
+}
+
+.cards a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card {
+  width: 520px;
+  min-height: 110px;
+  max-height: 110px;
+  border-radius: 12px;
+  box-shadow: 0 0 32px #000a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: visible;
+  margin-bottom: 54px;
+  border: none;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 40px #000c;
+}
+
+.card.red {
+  background: #7f1414;
+  background-image: url('../assets/helmet.png');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  background-position: -10px 15px;
+  box-shadow: 0 0 24px #b71c1c88;
+}
+
+.card.green {
+  background: #149912;
+  background-image: url('../assets/alien.png');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  background-position: -10px 15px;
+  box-shadow: 0 0 24px #1edc1a88;
+}
+
+.card-title {
+  width: 100%;
+  text-align: center;
+  font-size: 2.7rem;
+  margin: 0;
+  padding: 18px 0 20px;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0 #000, 0 0 8px #fff8;
+  font-weight: bold;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card.red .card-title { background: #bc2929; color: #fff; }
+.card.green .card-title { background: #00c800; color: #fff; }
+
+.card-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+  flex: none;
+  padding: 0 28px;
+  font-size: 1.9rem;
+  text-align: center;
+}
+
+.card.open {
+  max-height: 440px;
+}
+
+.card.open .card-content {
+  max-height: 400px;
+  padding: 15px 38px 30px;
+  opacity: 1;
+}
+
+.arrow {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 35px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px #000a;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #222;
+  font-weight: bold;
+  z-index: 2;
+}
+.arrow svg { width: 32px; height: 32px; }
+
+/* ===== GAMES PAGE ===== */
+.games-title {
+  display: block;
+  margin: 30px auto 0 auto; /* top spacing then bottom gap */
+  width: 570px; /* adjust for your PNG’s natural width */
+  max-width: 90%;
+  height: auto;
+  filter: brightness(80%);
+}
+
+.games-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 180px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.game-card {
+  border-radius: 28px;
+  border-style: solid;
+  border-color: rgb(40, 42, 42);
+  box-shadow: 0 0 30px #000a;
+  overflow: hidden;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 28px;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 100px #fff5 ;
+}
+
+/* ===== FLOATING DECOR ===== */
+.home-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+}
+
+.home-btn img {
+  width: 60px;
+  height: auto;
+  transition: transform 0.3s ease;
+  filter: brightness(70%);
+}
+
+.home-btn:hover img { transform: scale(1.1); }
+
+.spaceship {
+  position: absolute;
+  top: 80px;
+  left: 150px;
+  width: 100px;
+  height: 200px;
+  width: auto;
+  animation: float 1s ease-in-out infinite alternate;
+  filter: brightness(70%);
+}
+
+.astronaut {
+  position: absolute;
+  top: 70px;
+  right: 100px;
+  width: 90px;
+  height: 200px;
+  width: auto;
+  filter: brightness(70%);
+}
+
+@keyframes float {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-20px) rotate(3deg); }
+}
+
+/* ---- GAME PAGE ---- */
+
+
+
+/* Home button */
+.home-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.home-btn img {
+  width: 80px;
+  transition: transform 0.3s;
+}
+
+.home-btn img:hover {
+  transform: scale(1.1);
+}
+
+/* Title */
+.game-title-img {
+  display: block;
+  width: 600px; /* adjust for your PNG’s natural width */
+  max-width: 90%;
+  height: auto;
+}
+
+/* Board */
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 40px;
+  padding-right: 100px; 
+}
+
+/* Make the board bigger */
+.board {
+  width: 380px;  
+  height: 380px; 
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  box-shadow: 0 0 30px #00ff3344;
+}
+
+.cell {
+  border: 3px solid #fff;
+  font-size: 4rem; 
+  display: flex;
+  align-items: center;   
+  justify-content: center;   
+  text-align: center;        
+  cursor: pointer;
+}
+
+/* Top-right GIF */
+.top-right-gif {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 80px;
+  height: auto;
+  filter: brightness(70%);
+  z-index: 5;
+}
+
+/* Bottom-left GIF */
+.bottom-left-gif {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 100px;
+  height: auto;
+  filter: brightness(70%);
+  z-index: 5;
+}
+
+
+.cell.x::before {
+  content: "X";
+  color: #fff;
+}
+
+.cell.o::before {
+  content: "O";
+  color: #38ec50;
+}
+
+.alien-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.alien {
+  width: 220px;
+  padding-left: 100px;
+}
+
+.speech {
+  position: absolute;
+  top: -50px;
+  right: -70px;
+  font-size: 2rem;
+  font-family: 'Luckiest Guy', cursive;
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 20px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.7);
+  transform: rotate(-8deg);
+}
+
+/* Restart button */
+.restart-btn {
+  margin-top: 40px;
+  background: #00ff33;
+  color: #000;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.8rem;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #00ff3388;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.restart-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px #00ff33;
+}
+
+.speech {
+  position: absolute;
+  top: -50px;
+  right: -200px;
+  font-size: 1.8rem;
+  font-family: 'Luckiest Guy', cursive;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.8);
+  transform: rotate(8deg);
+  transition: all 0.3s ease;
+  max-width: 180px;
+  text-align: center;
+  box-shadow: 0 0 10px #fff3;
+}
+
+.game-container-4x4 { display: flex; gap: 60px; margin-top: 40px; }
+.board-4x4 {
+  width: 380px; height: 380px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: repeat(4,1fr);
+  gap: 3px; border: 3px solid #fff;
+}
+.cell-4x4 {
+  border: 3px solid #fff; font-size: 3rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative;
+}
+.cell-4x4.x::before { content: "X"; color: #fff; }
+.cell-4x4.o::before { content: "O"; color: #38ec50; }
+
+.game-title-img-2 {
+  display: block;
+  width: 700px;
+  max-width: 90%;
+  height: auto;
+}
+
+#Jupiter { width: 120px; height: auto; filter: brightness(70%); }
+
+.bottom-right-gif {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 250px;
+  height: auto;
+  filter: brightness(70%);
+  z-index: 5;
+}
