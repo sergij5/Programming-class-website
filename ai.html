@@ -10,7 +10,6 @@
 <style>
 body {
   font-family: 'Orbitron', sans-serif;
-  background: url('21740054-95e4-4443-b4b6-f12d3012c666.png') center/cover no-repeat;
   color: #fff;
   text-shadow: 0 0 6px #000;
   display: flex;
@@ -20,13 +19,40 @@ body {
   min-height: 100vh;
   padding: 30px;
   position: relative;
+  overflow-x: hidden;
+}
 
-    background-image: url('img/bg.gif');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+/* Циклический фон из множества изображений */
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
 
+.background-strip {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: scrollBackground 60s linear infinite;
+}
+
+.background-strip img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+@keyframes scrollBackground {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.33%);
+  }
 }
 
 /* Стили для изображений в углах */
@@ -67,7 +93,7 @@ body {
 
 /* Заголовок */
 h1 {
-  font-size: 3rem;
+  font-size: 30rem;
   color: #ffcc00;
   text-transform: uppercase;
   text-shadow: 0 0 10px #ffcc00, 0 0 30px #ffaa00;
@@ -75,13 +101,13 @@ h1 {
   z-index: 10;
 }
 
-/* Основной контейнер */
+/* Основной контейнер - опущен вниз */
 .container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 40px;
-  margin-top: 40px;
+  margin-top: 120px; /* Увеличили отступ сверху */
   z-index: 10;
   position: relative;
   width: 100%;
@@ -179,7 +205,7 @@ h1 {
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 0 25px #00aaff;
-  width: 320px;
+  width: 350px;
 }
 
 .metrics p {
@@ -203,52 +229,53 @@ h1 {
   color: #00ffff;
 }
 
-/* Обновленная кнопка запуска - полупрозрачная с текстом */
+/* Обновленная кнопка запуска - большего размера */
 .launch-button {
   background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  border-radius: 15px;
   cursor: pointer;
   transition: all 0.3s;
   width: 100%;
-  margin-top: 10px;
-  padding: 15px;
+  margin-top: 15px;
+  padding: 25px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  min-height: 120px;
+  min-height: 180px;
   backdrop-filter: blur(5px);
 }
 
 .launch-button:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
 }
 
 .rocket-icon {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
 }
 
 .cloud-image {
-  width: 80%;
-  max-width: 200px;
-  margin-top: 10px;
+  width: 90%;
+  max-width: 250px;
+  margin-top: 15px;
 }
 
 .button-text {
   color: white;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 5px;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  letter-spacing: 1px;
 }
 
 /* Статус игры */
@@ -267,6 +294,20 @@ h1 {
 </head>
 
 <body>
+  <!-- Циклический фон из множества изображений -->
+  <div class="background-container">
+    <div class="background-strip">
+      <!-- Замените эти изображения на ваши собственные -->
+      <img src="img/bg.gif" alt="Background 1">
+      <img src="img/bg.gif" alt="Background 2">
+      <img src="img/bg.gif" alt="Background 3">
+      <!-- Дублируем для бесшовной анимации -->
+      <img src="img/bg.gif" alt="Background 1">
+      <img src="img/bg.gif" alt="Background 2">
+      <img src="img/bg.gif" alt="Background 3">
+    </div>
+  </div>
+
   <!-- Изображения в углах -->
   <div id="home" class="corner-image">
     <img src="img/home.gif" alt="Home">
@@ -285,9 +326,9 @@ h1 {
   </div>
 
   <!-- Основной контент -->
-  <h1 class="text-3xl font-bold text-center mb-8">
-    <img src="img/Cool Text - AI Training 492436408948864 1.png" alt="AI TRAINING" class="inline-block h-8 mr-3">
-  </h1>
+  
+    <img src="img/Cool Text - AI Training 492436408948864 1.png" alt="AI TRAINING" class="inline-block h-8 mr-3" width="400" height="10000">
+ 
 
   <div class="container">
     <!-- Левая часть: игровое поле и кнопки -->
