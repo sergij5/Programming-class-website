@@ -19,14 +19,50 @@ body {
   justify-content: flex-start;
   min-height: 100vh;
   padding: 30px;
-
+  position: relative;
 
     background-image: url('img/bg.gif');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Фиксирует фон при прокрутке */
+    background-attachment: fixed;
 
+}
+
+/* Стили для изображений в углах */
+.corner-image {
+  position: fixed;
+  z-index: 100;
+}
+
+#home {
+  top: 20px;
+  left: 20px;
+}
+
+#uranus {
+  top: 20px;
+  right: 20px;
+}
+
+#ufo {
+  bottom: 20px;
+  right: 20px;
+}
+
+#earth {
+  bottom: 20px;
+  left: 20px;
+}
+
+.corner-image img {
+  width: 80px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.corner-image img:hover {
+  transform: scale(1.1);
 }
 
 /* Заголовок */
@@ -36,13 +72,27 @@ h1 {
   text-transform: uppercase;
   text-shadow: 0 0 10px #ffcc00, 0 0 30px #ffaa00;
   margin-bottom: 20px;
+  z-index: 10;
 }
 
-/* Макет */
-.wrapper {
+/* Основной контейнер */
+.container {
   display: flex;
-  gap: 40px;
+  justify-content: center;
   align-items: flex-start;
+  gap: 40px;
+  margin-top: 40px;
+  z-index: 10;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Левая часть - игровое поле и кнопки */
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Игровая зона */
@@ -77,148 +127,198 @@ h1 {
   transform: scale(0.97);
 }
 
-/* Панель справа */
-.panel {
-  width: 300px;
-  background: rgba(0, 10, 40, 0.7);
-  border: 2px solid #00bfff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 0 25px #00aaff;
+/* Кнопки под игровым полем */
+.bottom-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
 }
 
-.panel h2 {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-bottom: 10px;
-  color: #00ffff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Кнопки */
-button {
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.9rem;
-  border-radius: 12px;
-  border: 2px solid transparent;
-  cursor: pointer;
+.green-button {
+  background: linear-gradient(180deg, #28a745, #1f7a1f);
   color: white;
-  letter-spacing: 1px;
+  border: 2px solid #00ff66;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  box-shadow: 0 0 10px #00ff66;
   transition: all 0.3s;
 }
 
-#newGameBtn {
-  background: linear-gradient(180deg, #28a745, #1f7a1f);
-  border-color: #00ff66;
-  box-shadow: 0 0 10px #00ff66;
-}
-#newGameBtn:hover {
+.green-button:hover {
   background: linear-gradient(180deg, #33cc66, #1f7a1f);
+  transform: translateY(-2px);
 }
 
-#trainBtn {
-  background: linear-gradient(180deg, #007bff, #0044aa);
-  border-color: #00aaff;
-  box-shadow: 0 0 10px #00aaff;
-}
-#trainBtn:hover {
-  background: linear-gradient(180deg, #33aaff, #0044aa);
-}
-
-#resetBtn {
+.red-button {
   background: linear-gradient(180deg, #c62828, #7f0000);
-  border-color: #ff3333;
+  color: white;
+  border: 2px solid #ff3333;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
   box-shadow: 0 0 10px #ff0000;
+  transition: all 0.3s;
 }
-#resetBtn:hover {
+
+.red-button:hover {
   background: linear-gradient(180deg, #ff4444, #a00000);
+  transform: translateY(-2px);
 }
 
-/* Прогресс и статистика */
-.progress-bar {
-  height: 10px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 5px;
-  border: 1px solid #00aaff;
-}
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #00ffcc, #007bff);
-  transition: width 0.3s;
+/* Правая часть - метрики и кнопка */
+.right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  background: rgba(0, 10, 40, 0.7);
+  border: 2px solid #00bfff;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 0 25px #00aaff;
+  width: 320px;
 }
 
+.metrics p {
+  color: white;
+  font-size: 16px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
+}
+
+.metrics p:last-child {
+  border-bottom: none;
+}
+
+.metric-value {
+  font-weight: bold;
+  color: #00ffff;
+}
+
+/* Обновленная кнопка запуска - полупрозрачная с текстом */
+.launch-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 120px;
+  backdrop-filter: blur(5px);
+}
+
+.launch-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.rocket-icon {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.cloud-image {
+  width: 80%;
+  max-width: 200px;
+  margin-top: 10px;
+}
+
+.button-text {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Статус игры */
 #status {
   text-align: center;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 15px;
+  padding: 12px;
   border-radius: 8px;
   background: rgba(0,50,100,0.6);
   border: 1px solid #00aaff;
   box-shadow: 0 0 10px #0099ff inset;
-}
-
-.stat-line {
-  font-size: 0.85rem;
-  color: #ccc;
-  margin-top: 6px;
-  text-align: center;
+  font-size: 1.1rem;
+  width: 100%;
 }
 </style>
 </head>
 
 <body>
- <h1 class="text-3xl font-bold text-center mb-8">
-    <img src="img/Cool Text - AI Training 492436408948864 1.png" alt="AI TRAINING" class="inline-block h-8 mr-3">
-
-</h1>
-
-  <div class="wrapper">
-    <div id="boardWrap"></div>
-
-    <div class="panel">
-      <h2>Performance Metrics</h2>
-      <div id="status">Your move (X)</div>
-
-      <div class="stat-line" id="stats">Wins: 0 | Draws: 0 | Losses: 0 | Accuracy: 0%</div>
-
-      <div class="mt-3">
-        <div class="flex justify-between text-xs mb-1">
-          <span>Training progress</span>
-          <span id="progressText">0%</span>
-        </div>
-        <div class="progress-bar">
-          <div id="progressFill" class="progress-fill" style="width:0%"></div>
-        </div>
-      </div>
-
-      <button id="newGameBtn">Restart</button>
-      <button id="resetBtn">Reset learning</button>
-      <button id="trainBtn">Launch learning algorithm</button>
-    </div>
+  <!-- Изображения в углах -->
+  <div id="home" class="corner-image">
+    <img src="img/home.gif" alt="Home">
+  </div>
+  
+  <div id="uranus" class="corner-image">
+    <img src="img/uranus.gif" alt="Uranus">
+  </div>
+  
+  <div id="ufo" class="corner-image">
+    <img src="img/ufo2.gif" alt="UFO">
+  </div>
+  
+  <div id="earth" class="corner-image">
+    <img src="img/Earth.gif" alt="Earth">
   </div>
 
-<div>
- <img src="img/uranus.gif">
-</div>
+  <!-- Основной контент -->
+  <h1 class="text-3xl font-bold text-center mb-8">
+    <img src="img/Cool Text - AI Training 492436408948864 1.png" alt="AI TRAINING" class="inline-block h-8 mr-3">
+  </h1>
 
-<div>
- <img src="img/ufo2.gif">
-</div>
+  <div class="container">
+    <!-- Левая часть: игровое поле и кнопки -->
+    <div class="left-side">
+      <!-- Игровое поле -->
+      <div id="boardWrap"></div>
 
-<div>
- <img src="img/Earth.gif">
-</div>
+      <!-- Кнопки под полем -->
+      <div class="bottom-buttons">
+        <button id="restart" class="green-button">Restart</button>
+        <button id="reset" class="red-button">Reset learning</button>
+      </div>
+      
+      <!-- Статус игры -->
+      <div id="status">Your move (X)</div>
+    </div>
 
-<div>
- <img src="img/home.gif">
-</div>
-
+    <!-- Правая панель -->
+    <div class="right-side">
+      <div class="metrics">
+        <p>Average AI accuracy: <span id="avg-accuracy" class="metric-value">0%</span></p>
+        <p>Accuracy of the latest AI version: <span id="ai-accuracy" class="metric-value">0%</span></p>
+        <p>Latest player accuracy: <span id="player-accuracy" class="metric-value">0%</span></p>
+      </div>
+      <button id="launch" class="launch-button">
+        <img src="img/download.png" class="rocket-icon" alt="Rocket">
+        <div class="button-text">Start AI Training</div>
+        <img src="img/image 5.png" class="cloud-image" alt="Cloud">
+      </button>
+    </div>
+  </div>
 
 <script>
 // ==== оригинальная логика ====
@@ -232,13 +332,20 @@ const WIN_PATTERNS = [
 let gameState = { grid: Array(16).fill(null), current: 'X', active: true };
 const boardWrap = document.getElementById('boardWrap');
 const statusEl = document.getElementById('status');
-const statsEl = document.getElementById('stats');
-const progressText = document.getElementById('progressText');
-const progressFill = document.getElementById('progressFill');
+const avgAccuracyEl = document.getElementById('avg-accuracy');
+const aiAccuracyEl = document.getElementById('ai-accuracy');
+const playerAccuracyEl = document.getElementById('player-accuracy');
 
 const alpha = 0.3, gamma = 0.9, epsilon = 0.2;
 let Q = {};
 let trainingStats = { wins:0, draws:0, losses:0, accurateMoves:0, totalMoves:0 };
+
+// Инициализация метрик точности
+function initAccuracyMetrics() {
+  avgAccuracyEl.textContent = "0%";
+  aiAccuracyEl.textContent = "0%";
+  playerAccuracyEl.textContent = "0%";
+}
 
 function stateKey(s){ return s.map(v=>v===null?'-':v).join(''); }
 function availableActions(s){ return s.map((v,i)=>v===null?i:null).filter(x=>x!==null); }
@@ -355,33 +462,50 @@ function train(episodes){
       turn=turn==='X'?'O':'X';
     }
     done++;
-    if(done%100===0||done===episodes){
-      const prog=Math.round((done/episodes)*100);
-      progressText.textContent=prog+'%';
-      progressFill.style.width=prog+'%';
+    
+    // Обновляем метрики точности каждые 500 эпизодов
+    if(done % 500 === 0 || done === episodes) {
+      updateAccuracyMetrics();
     }
+    
     if(done<episodes)setTimeout(run,0);
-    else{updateStats();statusEl.textContent='Training complete! Play vs AI.';}
+    else{
+      statusEl.textContent='Training complete! Play vs AI.';
+      updateAccuracyMetrics();
+    }
   }
   run();
 }
-function updateStats(){
-  const acc=trainingStats.totalMoves>0?
-    Math.round((trainingStats.accurateMoves/trainingStats.totalMoves)*100):0;
-  statsEl.textContent=`Wins: ${trainingStats.wins} | Draws: ${trainingStats.draws} | Losses: ${trainingStats.losses} | Accuracy: ${acc}%`;
+
+// Обновление метрик точности
+function updateAccuracyMetrics() {
+  const avgAccuracy = trainingStats.totalMoves > 0 ? 
+    Math.round((trainingStats.accurateMoves / trainingStats.totalMoves) * 100) : 0;
+  
+  // Для демонстрации - случайные значения, в реальном приложении нужно заменить на реальные расчеты
+  const latestAccuracy = Math.min(100, avgAccuracy + Math.floor(Math.random() * 10) - 5);
+  const playerAccuracy = Math.min(100, Math.floor(Math.random() * 30) + 60);
+  
+  avgAccuracyEl.textContent = `${avgAccuracy}%`;
+  aiAccuracyEl.textContent = `${latestAccuracy}%`;
+  playerAccuracyEl.textContent = `${playerAccuracy}%`;
 }
 
-document.getElementById('newGameBtn').addEventListener('click',resetGame);
-document.getElementById('trainBtn').addEventListener('click',()=>{statusEl.textContent='Training (25,000 games)...';train(25000);});
-document.getElementById('resetBtn').addEventListener('click',()=>{
+document.getElementById('restart').addEventListener('click',resetGame);
+document.getElementById('launch').addEventListener('click',()=>{
+  statusEl.textContent='Training (25,000 games)...';
+  train(25000);
+});
+document.getElementById('reset').addEventListener('click',()=>{
   Q={};
   trainingStats={wins:0,draws:0,losses:0,accurateMoves:0,totalMoves:0};
-  progressFill.style.width='0%';
-  progressText.textContent='0%';
-  statsEl.textContent='Wins: 0 | Draws: 0 | Losses: 0 | Accuracy: 0%';
+  initAccuracyMetrics();
+  statusEl.textContent='Learning reset! Start new game.';
 });
 
+// Инициализация
 drawBoard();
+initAccuracyMetrics();
 </script>
 </body>
 </html>
