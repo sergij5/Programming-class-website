@@ -91,23 +91,26 @@ body {
   transform: scale(1.1);
 }
 
-/* Заголовок */
-h1 {
-  font-size: 30rem;
-  color: #ffcc00;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px #ffcc00, 0 0 30px #ffaa00;
-  margin-bottom: 20px;
+/* Контейнер для логотипа */
+.logo-container {
+  margin-top: 20px;
+  margin-bottom: 50px;
   z-index: 10;
+  text-align: center;
 }
 
-/* Основной контейнер - опущен вниз */
+.logo-container img {
+  max-width: 400px;
+  height: auto;
+}
+
+/* Основной контейнер - опущен еще ниже */
 .container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 40px;
-  margin-top: 120px; /* Увеличили отступ сверху */
+  margin-top: 20px; /* Уменьшили отступ сверху, так как логотип уже имеет отступ снизу */
   z-index: 10;
   position: relative;
   width: 100%;
@@ -325,10 +328,10 @@ h1 {
     <img src="img/Earth.gif" alt="Earth">
   </div>
 
-  <!-- Основной контент -->
-  
-    <img src="img/Cool Text - AI Training 492436408948864 1.png" alt="AI TRAINING" class="inline-block h-8 mr-3" width="400" height="10000">
- 
+  <!-- Контейнер для логотипа -->
+  <div class="logo-container">
+    <img src="img/Cool Text - AI Training 492436408948864 1.png" alt="AI TRAINING">
+  </div>
 
   <div class="container">
     <!-- Левая часть: игровое поле и кнопки -->
