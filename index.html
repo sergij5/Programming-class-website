@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://fonts.googleapis.com/css2?family=Freckle+Face&family=Luckiest+Guy&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <title>Watch IT Learn</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="header">
+  <img src="assets/tictactoe1.gif" alt="GIF 1" class="ttt-gif">
+  <img src="assets/watch-it-learn.gif" alt="title" id="wil" class="title-gif">
+  <img src="assets/tictactoe2.gif" alt="GIF 2" class="ttt-gif">
+</div>
+    <img src="assets/XOXO.gif" alt="XOXOXOXOXO GIF" class="xtra-gif">
+  </div>
+<div class="cards">
+  <div class="card red" onclick="goToPage(event, 'ai.html')">
+    <div class="card-title">Monitor AI training</div>
+    <div class="card-content">
+      Watch how AI learns strategies while playing with you or with an algorithm.
+    </div>
+    <div class="arrow" onclick="toggleCard(event, this)">
+      <svg viewBox="0 0 32 32">
+        <path d="M8 12l8 8 8-8" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card green" onclick="goToPage(event, 'games.html')">
+    <div class="card-title">Play with a bot</div>
+    <div class="card-content">
+      Play with AI that has already been trained and test your skills.
+    </div>
+    <div class="arrow" onclick="toggleCard(event, this)">
+      <svg viewBox="0 0 32 32">
+        <path d="M8 12l8 8 8-8" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+function toggleCard(arrow) {
+  const card = arrow.closest('.card');
+  card.classList.toggle('open');
+}
+</script>
+</html>
+<script>
+function toggleCard(event, arrow) {
+  event.stopPropagation(); // prevent click from triggering the link
+  const card = arrow.closest('.card');
+  card.classList.toggle('open');
+}
+
+function goToPage(event, url) {
+  const card = event.currentTarget;
+  // If the card is open, only navigate if the click wasn't on the content or arrow
+  const clickedInsideContent = event.target.closest('.arrow') || event.target.closest('.card-content');
+  if (!clickedInsideContent) {
+    window.location.href = url;
+  }
+}
+</script>

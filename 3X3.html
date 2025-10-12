@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+</head>
+<body class="game-page">
+
+  <a href="index.html" class="home-btn">
+    <img src="assets/home.gif" alt="Home">
+  </a>
+
+  <img src="assets/Mars.gif" alt="Top Right Decoration" class="top-right-gif">
+
+  <img src="assets/image 2.png" alt="Tic Tac Toe Title" class="game-title-img">
+
+  <div class="game-container">
+    <div class="board" id="board">
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+    </div>
+
+    <div class="alien-side">
+      <img src="assets/alien.gif" alt="Alien" class="alien">
+      <div class="speech" id="alienSpeech">Try me</div>
+    </div>
+  </div>
+
+  <button id="restartButton" class="restart-btn">Restart</button>
+
+  <img src="assets/Venus.gif" alt="Bottom Left Decoration" class="bottom-left-gif">
+
+  <script>
+const X_CLASS = 'x';
+const O_CLASS = 'o';
+const WINNING_COMBINATIONS = [
+  [0,1,2], [3,4,5], [6,7,8],
+  [0,3,6], [1,4,7], [2,5,8],
+  [0,4,8], [2,4,6]
+];
+
+const cellElements = document.querySelectorAll('[data-cell]');
+const restartButton = document.getElementById('restartButton');
+const alienSpeech = document.getElementById('alienSpeech');
+
+// --- Mean Alien Phrases ---
+const generalPhrases = [
+  "Pathetic attempt, human.",
+  "You call that a move?",
+  "Did you even think?",
+  "Try harder.",
+  "Are you even trying?",
+  "Your strategy is… nonexistent.",
+  "I’ve seen better moves from a toddler.",
+  "Do you even know the rules?",
+  "Are you sure you want to play?",
+  "This is almost too easy.",
+  "You’re making this boring.",
+  "Are you playing blindfolded?",
+  "How stupid are you?",
+  "You should just quit now.",
+  "Is this your first time playing?",
+  "You’re embarrassing yourself.",
+  "This game is not that hard.",
+  "Did you forget how to play?",
+  "Are you even aware of what you’re doing?",
+  "Are you just clicking randomly?",
+  "Did you fall asleep while playing?",
+  "You might want to reconsider your life choices.",
+  "Are you slow?",
+  "You're not making it to college.",
+  "My pet rock plays better than you.",
+  "You must be fun at parties.",
+  "I’ve seen snails move faster than you.",
+  "You bring shame to your species.",
+  "Go back to your planet.",
+  "Its not rocket science, you know.",
+  "This move was almost as bad as your last one.",
+  "You should be banned from playing.",
+  "Looking at you makes me lose faith in humanity.",
+  "Is this a joke?",
+  "These moves make me want to cry.",
+  "Your IQ must be below room temperature.",
+  "Just get good.",
+  "Most people try to win.",
+  "Awww, that was cute.",
+  "Let me know when you are ready.",
+  "Are you sure you have a brain?",
+  "It takes skill to be this bad",
+  "I didn't think you'd get that far with your eyes closed.",
+  "You must be really proud of that move.",
+  "You should consider a different hobby.",
+  "Okay it was funny the first few times...",
+  "No, seriously. Do it for real this time.",
+  "Ouch, I hope no one's watching you play.",
+  
+];
+
+const victoryPhrases = [
+  "GG EZ.",
+  "Loser.",
+  "You were doomed the moment you started.",
+  "Too easy.",
+  "You literally had no chance.",
+  "I win. As always.",
+  "Stop embarrassing yourself.",
+  "I’m superior in every way.",
+  "Better luck next time… not that it will help.",
+  "You should just give up now.",
+  "Are you intenionally losing?",
+  "Your parents must be disappointed.",
+  "I don’t even need to try.",
+  "You might be the worst player I’ve ever seen.",
+  "Litterally anyone could beat you."
+];
+
+const defeatPhrases = [
+  "Impossible… did you cheat?",
+  "This isn’t over.",
+  "You got lucky.",
+];
+
+const drawPhrases = [
+  "A tie? How boring…",
+  "Hmph. Not impressive.",
+  "Evenly matched? Hardly.",
+  "Your luck is exhausting.",
+  "I didn’t even try… and still almost won.",
+  "Barely escaped defeat, huh?",
+  "Next time I won’t hold back.",
+  "I let you off easy this time.",
+  "You should be grateful for the tie.",
+  "You really pushed your luck there.",
+  "Nice try, but I was just toying with you.",
+  "Maybe next time you’ll get lucky again.",
+  "A tie is the best you can do?",
+  "I was barely trying.",
+  "I tried to let you win.",
+  "Nice feeling huh? Don't get used to it.",
+];
+
+
+let board = Array(9).fill(null); // Track board state
+startGame();
+
+restartButton.addEventListener('click', startGame);
+
+function startGame() {
+  board = Array(9).fill(null);
+  cellElements.forEach(cell => {
+    cell.classList.remove(X_CLASS, O_CLASS);
+    cell.removeEventListener('click', handleClick);
+    cell.addEventListener('click', handleClick, { once: true });
+  });
+  alienSpeech.textContent = "Ready to lose?";
+}
+
+function handleClick(e) {
+  const cell = e.target;
+  const index = [...cellElements].indexOf(cell);
+
+  if (board[index]) return;
+
+  placeMark(cell, X_CLASS);
+  board[index] = X_CLASS;
+
+  if (checkWin(board, X_CLASS)) {
+    alienSpeech.textContent = defeatPhrases[Math.floor(Math.random() * defeatPhrases.length)];
+    disableBoard();
+    return;
+  }
+
+  if (isDraw(board)) {
+    alienSpeech.textContent = drawPhrases[Math.floor(Math.random() * drawPhrases.length)];
+    disableBoard();
+    return;
+  }
+
+  // Alien's turn
+  disableBoard(); // prevent player clicks during AI turn
+  alienSpeech.textContent = generalPhrases[Math.floor(Math.random() * generalPhrases.length)];
+  
+  setTimeout(() => {
+    const bestMove = minimax(board, O_CLASS).index;
+    board[bestMove] = O_CLASS;
+    placeMark(cellElements[bestMove], O_CLASS);
+
+    if (checkWin(board, O_CLASS)) {
+      alienSpeech.textContent = victoryPhrases[Math.floor(Math.random() * victoryPhrases.length)];
+      disableBoard();
+    } else if (isDraw(board)) {
+      alienSpeech.textContent = drawPhrases[Math.floor(Math.random() * drawPhrases.length)];
+      disableBoard();
+    } else {
+      enableBoard();
+    }
+  }, 600);
+}
+
+function placeMark(cell, currentClass) {
+  cell.classList.add(currentClass);
+}
+
+function checkWin(b, player) {
+  return WINNING_COMBINATIONS.some(combo => combo.every(i => b[i] === player));
+}
+
+function isDraw(b) {
+  return b.every(cell => cell);
+}
+
+function disableBoard() {
+  cellElements.forEach(cell => cell.removeEventListener('click', handleClick));
+}
+
+function enableBoard() {
+  cellElements.forEach((cell, index) => {
+    if (!board[index]) {
+      cell.addEventListener('click', handleClick, { once: true });
+    }
+  });
+}
+
+// --- Minimax AI ---
+function minimax(newBoard, player) {
+  const availSpots = newBoard.map((val,i) => val === null ? i : null).filter(i => i !== null);
+
+  if (checkWin(newBoard, X_CLASS)) return { score: -10 };
+  if (checkWin(newBoard, O_CLASS)) return { score: 10 };
+  if (availSpots.length === 0) return { score: 0 };
+
+  const moves = [];
+
+  for (let i = 0; i < availSpots.length; i++) {
+    const index = availSpots[i];
+    const move = {};
+    move.index = index;
+    newBoard[index] = player;
+
+    if (player === O_CLASS) {
+      const result = minimax(newBoard, X_CLASS);
+      move.score = result.score;
+    } else {
+      const result = minimax(newBoard, O_CLASS);
+      move.score = result.score;
+    }
+
+    newBoard[index] = null;
+    moves.push(move);
+  }
+
+  let bestMove;
+  if (player === O_CLASS) {
+    let bestScore = -Infinity;
+    moves.forEach(m => { if (m.score > bestScore) { bestScore = m.score; bestMove = m; } });
+  } else {
+    let bestScore = Infinity;
+    moves.forEach(m => { if (m.score < bestScore) { bestScore = m.score; bestMove = m; } });
+  }
+
+  return bestMove;
+}
+</script>
+
+
+</body>
+</html>
