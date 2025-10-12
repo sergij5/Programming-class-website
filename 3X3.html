@@ -230,11 +230,11 @@ function enableBoard() {
 }
 
 // --- Minimax AI ---
-function minimax(newBoard, player) {
-  const availSpots = newBoard.map((val,i) => val === null ? i : null).filter(i => i !== null);
+function minimax(newBoard, player, depth = 0) {
+  const availSpots = newBoard.map((val, i) => val === null ? i : null).filter(i => i !== null);
 
-  if (checkWin(newBoard, X_CLASS)) return { score: -10 };
-  if (checkWin(newBoard, O_CLASS)) return { score: 10 };
+  if (checkWin(newBoard, X_CLASS)) return { score: -10 + depth }; // prefer slower loss
+  if (checkWin(newBoard, O_CLASS)) return { score: 10 - depth };  // prefer faster win
   if (availSpots.length === 0) return { score: 0 };
 
   const moves = [];
@@ -246,11 +246,9 @@ function minimax(newBoard, player) {
     newBoard[index] = player;
 
     if (player === O_CLASS) {
-      const result = minimax(newBoard, X_CLASS);
-      move.score = result.score;
+      move.score = minimax(newBoard, X_CLASS, depth + 1).score;
     } else {
-      const result = minimax(newBoard, O_CLASS);
-      move.score = result.score;
+      move.score = minimax(newBoard, O_CLASS, depth + 1).score;
     }
 
     newBoard[index] = null;
@@ -260,16 +258,28 @@ function minimax(newBoard, player) {
   let bestMove;
   if (player === O_CLASS) {
     let bestScore = -Infinity;
-    moves.forEach(m => { if (m.score > bestScore) { bestScore = m.score; bestMove = m; } });
+    for (let m of moves) {
+      if (m.score > bestScore) {
+        bestScore = m.score;
+        bestMove = m;
+      }
+    }
   } else {
     let bestScore = Infinity;
-    moves.forEach(m => { if (m.score < bestScore) { bestScore = m.score; bestMove = m; } });
+    for (let m of moves) {
+      if (m.score < bestScore) {
+        bestScore = m.score;
+        bestMove = m;
+      }
+    }
   }
 
   return bestMove;
 }
+
 </script>
 
 
 </body>
 </html>
+
