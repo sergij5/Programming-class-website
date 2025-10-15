@@ -1,36 +1,31 @@
-import http.server
-import socketserver
+from flask import Flask, send_from_directory, render_template
 import os
+
+app = Flask(__name__, static_folder='.', template_folder='.')
 
 PORT = 8000
 
 print("=" * 50)
-print("🔄 Запускаем локальный сервер...")
+print("🚀 Запускаем Flask сервер...")
 print(f"📁 Текущая папка: {os.getcwd()}")
 print(f"🌐 Сервер будет доступен по: http://localhost:{PORT}")
 print("=" * 50)
 
-# Проверяем, есть ли index.html
-if not os.path.exists('index.html'):
-    print("❌ ВНИМАНИЕ: Файл index.html не найден в текущей папке!")
-    print("Создайте файл index.html или переименуйте свою главную страницу")
-else:
-    print("✅ index.html найден")
+# Главная страница
+@app.route('/')
+def index():
+    if os.path.exists('index.html'):
+        return send_from_directory('.', 'index.html')
+    else:
+        return "<h1>❌ Файл index.html не найден</h1>"
 
-try:
-    Handler = http.server.SimpleHTTPRequestHandler
-    
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print("\n🎯 Сервер успешно запущен!")
-        print("📖 Открой браузер и перейди на http://localhost:8000")
-        print("⏹️  Для остановки сервера нажми Ctrl+C\n")
-        
-        httpd.serve_forever()
-        
-except OSError as e:
-    print(f"❌ Ошибка: Порт {PORT} уже занят!")
-    print("Попробуй другой порт, например: 8080, 3000")
-except KeyboardInterrupt:
-    print("\n🛑 Сервер остановлен")
-except Exception as e:
-    print(f"❌ Неизвестная ошибка: {e}")
+# Раздача статических файлов (css, js и т.д.)
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('.', filename)
+
+if __name__ == '__main__':
+    try:
+        app.run(port=PORT)
+    except OSError:
+        print(f"❌ Порт {PORT} занят! Попробуй другой порт.")
