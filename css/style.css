@@ -428,7 +428,7 @@ body {
   background: rgba(0, 0, 0, 0.8);
   transform: rotate(8deg);
   transition: all 0.3s ease;
-  max-width: 180px;
+  max-width: 200px;
   text-align: center;
   box-shadow: 0 0 10px #fff3;
 }
